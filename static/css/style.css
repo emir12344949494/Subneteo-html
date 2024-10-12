@@ -1,0 +1,25 @@
+ .uno {
+    background-color: #4CAF50;
+    height: 120px;
+  
+ }
+
+ .dos {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #fff;
+ }
+
+.rayo{
+    background-color: #4CAF50;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.texas{
+    background: rgb(255, 255, 255);
+    max-width: 1500px;
+    width: 92%;
+    margin: auto;
+    overflow: hidden;
+}

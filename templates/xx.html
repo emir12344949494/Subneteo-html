@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Subredes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link  class="ops" rel="icon" href="{{ url_for('static', filename='css/calculadora.svg') }}" type="image/svg+xml">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 203px;
+            height: 21px;
+            padding: 5px;
+            margin-bottom: 11px;
+            border: 2px solid #c4bebe;
+            border-radius: 2px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+
+        }
+        tr {
+            background-color: #fafafa;
+        }
+    </style>
+ </head>
+<section class="texas">
+ <body>
+    <div class="uno">
+        <br>
+         <center class="dos">
+             <h1>Calculadora de Subneteo&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" fill="currentColor" class="bi bi-ethernet" viewBox="0 0 16 16">
+                 <path d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"/>
+                 <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/>
+               </svg></h1>
+         </center>
+       <br>
+     </div>
+
+    <h2>Calculadora de Subredes</h2>
+
+    <label for="ip">Dirección IP:</label>
+    <input type="text" id="ip" name="ip" placeholder="0">
+
+    <label for="mascara">Máscara de Subred:</label>
+    <input type="text" id="mascara" name="mascara" placeholder="0">
+
+    <label for="subredes">Número de Subredes:</label>
+    <input type="text" id="subredes" name="subredes" placeholder="0">
+     <br>
+    <button onclick="calcularSubredes()">Calcular</button>
+    <br>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Subred</th>
+                <th>Red</th>
+                <th>Host-Min</th>
+                <th>Host-Max</th>
+                <th>Broadcast</th>
+                <th>Máscara</th>
+                <th>Prefijo</th>
+                <th>Wildcard</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+     <h2 class="delta">Formatos de descarga&nbsp;&nbsp;&nbsp<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+    </svg></h2>
+    <button id="downloadJPG">Descargar como JPG</button>
+    <button id="downloadPNG">Descargar como PNG</button>
+    <button id="downloadExcel">Descargar como Excel</button>
+     <br>
+     <div>
+        <h1 class="tres">Clase de redes ip</h1>
+        <h2 class="five">Red Clase A</h2>
+        <p>Esta clase de dirección IP se utiliza cuando hay una gran cantidad de hosts. En un tipo de red de Clase A, los primeros 8 bits (también llamados primer octeto) identifican la red y 
+          los restantes tienen 24 bits para el host de esa red. Un ejemplo de dirección Clase A es 102.168.212.226. Aquí, "102" le ayuda a identificar la red y 168.212.226
+          identifica el host. Las direcciones de clase A 127.0.0.0 a 127.255.255.255 no se pueden utilizar y están reservadas para funciones de diagnóstico y bucle invertido.
+        </p>
+        <h2 class="five">Red Clase B</h2>
+        <p>En una dirección IP de clase B, las direcciones binarias comienzan con 10. En esta dirección IP, el número decimal de clase puede estar entre 128 y 191. El número 127 está reservado para loopback, que se utiliza para pruebas internas en la máquina local. Los primeros 16 bits (conocidos como dos octetos) 
+          le ayudan a identificar la red. Los otros 16 bits restantes indican el host dentro de la red.Un ejemplo de dirección IP de Clase B es 168.212.226.204, donde *168 212* identifica la red y *226.204* le ayuda a identificar el host de la red Hut.
+        </p>
+        <h2 class="five">Red Clase C</h2>
+        <p>La clase C es un tipo de dirección IP que se utiliza para redes pequeñas. En esta clase, se utilizan tres octetos para sangrar la red. Esta IP oscila entre 192 y 223.
+         En este tipo de método de direccionamiento de red, los dos primeros bits se establecen en 1 y el tercer bit se establece en 0, lo que hace que los primeros 24 bits de la dirección sean ellos y el bit restante la dirección del host. La mayor parte de la red de área local utilizaba
+         una dirección IP de Clase C para conectarse a la red.</p>
+      </div>
+           <br>
+         <button class="house" onclick="location.href='/TablaRed'">Clasificación de redes</button>
+          <br>
+       <br>
+   <section class="rayo">
+      <br>
+       <br>
+       <center><p class="fuerte">
+        <strong>Ayuda</strong>
+         <br>
+         La Calculadora IP toma los valores de una dirección IP y su máscara de red (netmask) y calcula la direccion broadcast, red, Cisco wildcard mask y el numero de IPs en la red. Introduciendo un segundo valor de máscara de red, podrás diseñar sub- y super redes. Tambien podrás aprender/experimentar 
+         introduciendo diferentes valores y viendo el resultado.
+         </p>
+       </center>
+      <br>
+      <center><p>Derechos de ©Copiring</p></center>
+      <center><p>Esta pagina fue hecha en 2024 en MEXICO</p></center>
+     <br>
+   </section>
+
+    <script>
+        function calcularSubredes() {
+            var ip = document.getElementById('ip').value;
+            var mascara = document.getElementById('mascara').value;
+            var subredes = parseInt(document.getElementById('subredes').value);
+
+            if (ip === "" || mascara === "" || isNaN(subredes)) {
+                alert("Por favor, ingresa una IP, una máscara y un número de subredes válido.");
+                return false;
+            }
+
+            // Convertir la máscara de subred a su representación CIDR
+            var bitsMascara = calcularBitsMascara(mascara);
+            var numHosts = Math.pow(2, 32 - bitsMascara) - 2;
+
+            // Calcular la dirección de red y las subredes
+            var ipBase = convertirIPaNumero(ip);
+            var incrementoSubred = Math.pow(2, 32 - bitsMascara);
+            var tabla = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+            tabla.innerHTML = '';
+
+            for (let i = 0; i < subredes; i++) {
+                var red = ipBase + (i * incrementoSubred);
+                var hostMin = red + 1;
+                var hostMax = red + numHosts;
+                var broadcast = red + incrementoSubred - 1;
+                var wildcard = calcularWildcard(mascara);
+
+                agregarFilaTabla(tabla, {
+                    numeroSubred: i + 1,
+                    direccionRed: convertirNumeroAIP(red),
+                    hostMin: convertirNumeroAIP(hostMin),
+                    hostMax: convertirNumeroAIP(hostMax),
+                    broadcast: convertirNumeroAIP(broadcast),
+                    mascara: mascara,
+                    prefijo: '/' + bitsMascara,
+                    wildcard: wildcard
+                });
+            }
+        }
+
+        function convertirIPaNumero(ip) {
+            var partes = ip.split('.').map(Number);
+            return ((partes[0] << 24) | (partes[1] << 16) | (partes[2] << 8) | partes[3]) >>> 0;
+        }
+
+        function convertirNumeroAIP(num) {
+            return [(num >>> 24) & 255, (num >>> 16) & 255, (num >>> 8) & 255, num & 255].join('.');
+        }
+
+        function calcularBitsMascara(mascara) {
+            return mascara.split('.')
+                .map(octet => parseInt(octet, 10).toString(2).padStart(8, '0'))
+                .join('').split('1').length - 1;
+        }
+
+        function calcularWildcard(mascara) {
+            var partes = mascara.split('.').map(octet => 255 - parseInt(octet, 10));
+            return partes.join('.');
+        }
+
+        function agregarFilaTabla(tabla, datos) {
+            var fila = tabla.insertRow();
+            fila.insertCell(0).textContent = datos.numeroSubred;
+            fila.insertCell(1).textContent = datos.direccionRed;
+            fila.insertCell(2).textContent = datos.hostMin;
+            fila.insertCell(3).textContent = datos.hostMax;
+            fila.insertCell(4).textContent = datos.broadcast;
+            fila.insertCell(5).textContent = datos.mascara;
+            fila.insertCell(6).textContent = datos.prefijo;
+            fila.insertCell(7).textContent = datos.wildcard;
+        }
+
+        // Function to download the table as JPG or PNG
+        function downloadImage(type) {
+            html2canvas(document.querySelector('#myTable')).then(function(canvas) {
+                var link = document.createElement('a');
+                link.href = canvas.toDataURL(`image/${type}`);
+                link.download = `tabla.${type}`;
+                link.click();
+            });
+        }
+
+        // Function to download the table as JPG or PNG
+ function downloadImage(type) {
+    html2canvas(document.querySelector('#myTable'), {
+        onrendered: function(canvas) {
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL(`image/${type}`);
+            link.download = `table.${type}`;
+            link.click();
+        }
+    });
+ }
+
+// Function to download the table as Excel
+ function downloadExcel() {
+    var table = document.getElementById("myTable");
+    var workbook = XLSX.utils.table_to_book(table, {sheet: "Sheet 1"});
+    XLSX.writeFile(workbook, 'table.xlsx');
+ }
+
+// Add event listeners to buttons
+ document.getElementById('downloadJPG').addEventListener('click', function() {
+    downloadImage('jpeg');
+ });
+
+ document.getElementById('downloadPNG').addEventListener('click', function() {
+    downloadImage('png');
+ });
+
+ document.getElementById('downloadExcel').addEventListener('click', function() {
+    downloadExcel();
+ });
+ </script>
+ </body>
+</section>
+</html>

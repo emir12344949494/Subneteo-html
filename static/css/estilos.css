@@ -1,0 +1,42 @@
+body{
+    background-color: rgb(255, 255, 255);
+}
+
+.yes{
+    font-family: sans-serif;
+}
+
+.rayo{
+    background-color: #4CAF50;
+    margin: 0 auto;
+    overflow: hidden;
+    font-family: sans-serif;
+    color: #ffffff;
+}
+
+.uno {
+    background-color: #4CAF50;
+    height: 120px;
+  
+ }
+
+ .house {
+    background-color: #4CAF50;
+    color:#4CAF50;
+    margin: 2px;
+    height: 40px;
+    width: 110px;
+}
+
+.five{
+    font-family: sans-serif;
+    
+}
+
+.texas{
+    background: rgb(255, 255, 255);
+    max-width: 1500px;
+    width: 92%;
+    margin: auto;
+    overflow: hidden;
+}
