@@ -1,149 +1,333 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Subredes</title>
+    <title>Calculadora de Subredes IPv4</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link  class="ops" rel="icon" href="{{ url_for('static', filename='css/calculadora.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ url_for('static', filename='css/calculadora.svg') }}" type="image/svg+xml">
+
+    <!-- Librerías para generar las tablas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.5/xlsx.full.min.js"></script>
-    <meta name="google-site-verification" content="kMXwxSvg64aCK_ipXLvzuhhY-DDdLks7A-SV78FhnSU" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #dddddd;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            margin: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
         }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            gap: 10px;
+            margin-bottom: 20px;
+            background-color: #4caf50;
+            border-radius: 3px;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+
         label {
-            display: block;
-            margin: 10px 0 5px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        input[type="text"], input[type="number"] {
-            width: 203px;
-            height: 21px;
-            padding: 5px;
-            margin-bottom: 11px;
-            border: 2px solid #c4bebe;
-            border-radius: 2px;
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
         }
-        button {
-            background-color: #4CAF50;
+
+        .btn {
+            background-color: var(--primary-color);
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-right: 5px;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .btn:hover {
+            background-color: var(--primary-hover);
         }
+
+        .actions-group {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
             text-align: center;
         }
-        th {
-            background-color: #4CAF50;
-            color: white;
 
+        th {
+            background-color: var(--primary-color);
+            color: white;
         }
-        tr {
-            background-color: #fafafa;
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            font-size: 14px;
+            color: #fcfcfc;
+            border-top: 1px solid var(--border-color);
+            background-color: #4caf50;
+        }
+
+        .iamage {
+            width: 915px;
+            height: 300px;
+        }
+
+
+
+        :root {
+            --primary-color: #2e7d32;
+            --primary-hover: #1b5e20;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --table-even: #f8f9fa;
+            --info-bg: #f1f8e9;
+            --footer-bg: #edf2f7;
+            --input-bg: #ffffff;
+        }
+
+        /* Paleta de colores para Modo Oscuro */
+        body.dark-mode {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333333;
+            --table-even: #262626;
+            --info-bg: #1b2e1e;
+            --footer-bg: #252525;
+            --input-bg: #2c2c2c;
+        }
+
+        /* Asegúrate de que tus elementos usen estas variables */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1.5px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-even);
+        }
+
+        .info-section {
+            background-color: var(--info-bg);
+        }
+
+        .help-footer {
+            background-color: var(--footer-bg);
         }
     </style>
- </head>
-<section class="texas">
- <body>
-    <div class="uno">
+</head>
+
+<body>
+    <div class="container">
+        <button id="themeToggle" class="btn btn-secondary" type="button" type="image/svg+xml">Modo Claro</button>
         <br>
-         <center class="dos">
-             <h1>Calculadora de Subneteo&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" fill="currentColor" class="bi bi-ethernet" viewBox="0 0 16 16">
-                 <path d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"/>
-                 <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/>
-               </svg></h1>
-         </center>
-       <br>
-     </div>
-
-    <h2>Calculadora de Subredes</h2>
-
-    <label for="ip">Dirección IP:</label>
-    <input type="text" id="ip" name="ip" placeholder="0">
-
-    <label for="mascara">Máscara de Subred:</label>
-    <input type="text" id="mascara" name="mascara" placeholder="0">
-
-    <label for="subredes">Número de Subredes:</label>
-    <input type="text" id="subredes" name="subredes" placeholder="0">
-     <br>
-    <button onclick="calcularSubredes()">Calcular</button>
-    <br>
-    <table id="myTable">
-        <thead>
-            <tr>
-                <th>Subred</th>
-                <th>Red</th>
-                <th>Host-Min</th>
-                <th>Host-Max</th>
-                <th>Broadcast</th>
-                <th>Máscara</th>
-                <th>Prefijo</th>
-                <th>Wildcard</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-     <h2 class="delta">Formatos de descarga&nbsp;&nbsp;&nbsp<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-    </svg></h2>
-    <button id="downloadJPG">Descargar como JPG</button>
-    <button id="downloadPNG">Descargar como PNG</button>
-    <button id="downloadExcel">Descargar como Excel</button>
-     <br>
-     <div>
-        <h1 class="tres">Clase de redes ip</h1>
-        <h2 class="five">Red Clase A</h2>
-        <p>Esta clase de dirección IP se utiliza cuando hay una gran cantidad de hosts. En un tipo de red de Clase A, los primeros 8 bits (también llamados primer octeto) identifican la red y 
-          los restantes tienen 24 bits para el host de esa red. Un ejemplo de dirección Clase A es 102.168.212.226. Aquí, "102" le ayuda a identificar la red y 168.212.226
-          identifica el host. Las direcciones de clase A 127.0.0.0 a 127.255.255.255 no se pueden utilizar y están reservadas para funciones de diagnóstico y bucle invertido.
-        </p>
-        <h2 class="five">Red Clase B</h2>
-        <p>En una dirección IP de clase B, las direcciones binarias comienzan con 10. En esta dirección IP, el número decimal de clase puede estar entre 128 y 191. El número 127 está reservado para loopback, que se utiliza para pruebas internas en la máquina local. Los primeros 16 bits (conocidos como dos octetos) 
-          le ayudan a identificar la red. Los otros 16 bits restantes indican el host dentro de la red.Un ejemplo de dirección IP de Clase B es 168.212.226.204, donde *168 212* identifica la red y *226.204* le ayuda a identificar el host de la red Hut.
-        </p>
-        <h2 class="five">Red Clase C</h2>
-        <p>La clase C es un tipo de dirección IP que se utiliza para redes pequeñas. En esta clase, se utilizan tres octetos para sangrar la red. Esta IP oscila entre 192 y 223.
-         En este tipo de método de direccionamiento de red, los dos primeros bits se establecen en 1 y el tercer bit se establece en 0, lo que hace que los primeros 24 bits de la dirección sean ellos y el bit restante la dirección del host. La mayor parte de la red de área local utilizaba
-         una dirección IP de Clase C para conectarse a la red.</p>
-      </div>
-           <br>
-         <button class="house" onclick="location.href='/TablaRed'">Clasificación de redes</button>
-          <br>
-       <br>
-   <section class="rayo">
-      <br>
-       <br>
-       <center><p class="fuerte">
-        <strong>Ayuda</strong>
          <br>
-         La Calculadora IP toma los valores de una dirección IP y su máscara de red (netmask) y calcula la direccion broadcast, red, Cisco wildcard mask y el numero de IPs en la red. Introduciendo un segundo valor de máscara de red, podrás diseñar sub- y super redes. Tambien podrás aprender/experimentar 
-         introduciendo diferentes valores y viendo el resultado.
-         </p>
-       </center>
-      <br>
-      <center><p>Derechos de ©Copiring</p></center>
-      <center><p>Esta pagina fue hecha en 2024 en MEXICO</p></center>
-     <br>
-   </section>
+        <header class="header-title">
+            <br>
+            <h1>Calculadora de Subneteo</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z" />
+                <path
+                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
+            </svg>
+            <br>
+        </header>
+        <main>
+            <div class="form-group">
+                <div class="input-field">
+                    <label for="ip">Dirección IP Base:</label>
+                    <input type="text" id="ip" name="ip" placeholder="192.168.1.0">
+                </div>
+                <div class="input-field">
+                    <label for="mascara">Máscara</label>
+                    <input type="text" id="mascara" name="mascara" placeholder="255.255.255.0">
+                </div>
+                <div class="input-field">
+                    <label for="subredes">Número de Subredes:</label>
+                    <input type="text" id="subredes" name="subredes" placeholder="0">
+                </div>
+            </div>
+
+            <button onclick="calcularSubredes()" class="btn">Calcular</button>
+
+            <div class="table-responsive">
+                <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Subred #</th>
+                            <th>Dirección Red</th>
+                            <th>Host Min</th>
+                            <th>Host Max</th>
+                            <th>Broadcast</th>
+                            <th>Nueva Máscara</th>
+                            <th>Prefijo</th>
+                            <th>Wildcard</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <section class="actions-group">
+                <h3>Formatos de descarga</h3>
+                <button id="downloadJPG" class="btn">Descargar Jpg</button>
+                <button id="downloadPNG" class="btn">Descargar Png</button>
+                <button id="downloadExcel" class="btn">Descargar Excel</button>
+            </section>
+
+            <section class="info-section">
+                <h2>Clases de Direcciones IP</h2>
+
+                <article class="clase-card">
+                    <h3>Red Clase A</h3>
+                    <p><strong>Propósito:</strong> Diseñada para redes gigantescas (gobiernos, multinacionales,
+                        proveedores de internet).</p>
+                    <p><strong>Rango IP:</strong> 1.0.0.0 a 126.255.255.255</p>
+                    <p><strong>Máscara por defecto:</strong> 255.0.0.0 ( /8 )</p>
+                    <p><strong>Estructura:</strong> El primer octeto (8 bits) identifica la red y los 3 octetos
+                        restantes (24 bits) se destinan a hosts.</p>
+                    <p><strong>Capacidad:</strong> 126 redes y hasta 16,777,214 hosts utilizables por red.</p>
+                    <div class="nota-reservada">
+                        <p><em>Nota sobre Loopback:</em> El rango 127.0.0.0 a 127.255.255.255 pertenece a la Clase A
+                            pero está reservado exclusivamente para diagnóstico local (localhost).</p>
+                    </div>
+                </article>
+
+                <article class="clase-card">
+                    <h3>Red Clase B</h3>
+                    <p><strong>Propósito:</strong> Diseñada para redes medianas a grandes (universidades, corporativos).
+                    </p>
+                    <p><strong>Rango IP:</strong> 128.0.0.0 a 191.255.255.255</p>
+                    <p><strong>Máscara por defecto:</strong> 255.255.0.0 ( /16 )</p>
+                    <p><strong>Estructura:</strong> Los primeros 2 octetos (16 bits) identifican la red y los otros 2
+                        octetos se destinan a hosts.</p>
+                    <p><strong>Capacidad:</strong> 16,384 redes y hasta 65,534 hosts utilizables por red.</p>
+                </article>
+
+                <article class="clase-card">
+                    <h3>Red Clase C</h3>
+                    <p><strong>Propósito:</strong> Diseñada para redes pequeñas (LANs domésticas, pequeñas empresas).
+                    </p>
+                    <p><strong>Rango IP:</strong> 192.0.0.0 a 223.255.255.255</p>
+                    <p><strong>Máscara por defecto:</strong> 255.255.255.0 ( /24 )</p>
+                    <p><strong>Estructura:</strong> Los primeros 3 octetos (24 bits) identifican la red y el último
+                        octeto (8 bits) se destina a hosts.</p>
+                    <p><strong>Capacidad:</strong> 2,097,152 redes y hasta 254 hosts utilizables por red.</p>
+                </article>
+
+                <article class="clase-card">
+                    <h3>Red Clase D (Multicast / Multidifusión)</h3>
+                    <p><strong>Propósito:</strong> Reservada exclusivamente para tráfico de multidifusión (transmisión
+                        simultánea a un grupo de equipos, como streaming o protocolos de enrutamiento).</p>
+                    <p><strong>Rango IP:</strong> 224.0.0.0 a 239.255.255.255</p>
+                    <p><strong>Estructura:</strong> No se asigna a hosts individuales y no utiliza máscaras de subred
+                        estándar.</p>
+                </article>
+
+                <article class="clase-card">
+                    <h3>Red Clase E (Experimental)</h3>
+                    <p><strong>Propósito:</strong> Reservada por la IANA para fines de investigación, desarrollo
+                        experimental y uso futuro.</p>
+                    <p><strong>Rango IP:</strong> 240.0.0.0 a 255.255.255.254</p>
+                    <p><strong>Estructura:</strong> No disponible para uso comercial ni asignación en redes de
+                        producción.</p>
+                </article>
+            </section>
+        </main>
+        <br>
+        <center><img src="static/images/imagen-01.jpg" alt="bits" class="iamage" /></center>
+        <br>
+        <br>
+        <button class="btn" onclick="location.href='/TablaRed'">Clasificación de redes</button>
+        <br>
+        <footer class="footer">
+            <br>
+            <p>&copy; Derechos Reservados | Delta-computing.</p>
+            <p class="este">Todos los derechos reservados</p>
+            <br>
+        </footer>
+    </div>
 
     <script>
         function calcularSubredes() {
@@ -219,8 +403,8 @@
         }
 
         // Function to download the table as JPG or PNG
-        function downloadImage(type) {
-            html2canvas(document.querySelector('#myTable')).then(function(canvas) {
+        function downloadImages(type) {
+            html2canvas(document.querySelector('#myTable')).then(function (canvas) {
                 var link = document.createElement('a');
                 link.href = canvas.toDataURL(`image/${type}`);
                 link.download = `tabla.${type}`;
@@ -229,37 +413,63 @@
         }
 
         // Function to download the table as JPG or PNG
- function downloadImage(type) {
-    html2canvas(document.querySelector('#myTable'), {
-        onrendered: function(canvas) {
-            var link = document.createElement('a');
-            link.href = canvas.toDataURL(`image/${type}`);
-            link.download = `table.${type}`;
-            link.click();
+        function downloadImages(type) {
+            html2canvas(document.querySelector('#myTable'), {
+                onrendered: function (canvas) {
+                    var link = document.createElement('a');
+                    link.href = canvas.toDataURL(`image/${type}`);
+                    link.download = `tabla.${type}`;
+                    link.click();
+                }
+            });
         }
-    });
- }
 
-// Function to download the table as Excel
- function downloadExcel() {
-    var table = document.getElementById("myTable");
-    var workbook = XLSX.utils.table_to_book(table, {sheet: "Sheet 1"});
-    XLSX.writeFile(workbook, 'table.xlsx');
- }
+        // Funciones de tabla de Excel
+        function downloadExcel() {
+            var table = document.getElementById("myTable");
+            var workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet 1" });
+            XLSX.writeFile(workbook, 'tabla.xlsx');
+        }
 
-// Add event listeners to buttons
- document.getElementById('downloadJPG').addEventListener('click', function() {
-    downloadImage('jpeg');
- });
+        // detectores de eventos al botón
+        document.getElementById('downloadJPG').addEventListener('click', function () {
+            downloadImages('jpeg');
+        });
 
- document.getElementById('downloadPNG').addEventListener('click', function() {
-    downloadImage('png');
- });
+        document.getElementById('downloadPNG').addEventListener('click', function () {
+            downloadImages('png');
+        });
 
- document.getElementById('downloadExcel').addEventListener('click', function() {
-    downloadExcel();
- });
- </script>
- </body>
+        document.getElementById('downloadExcel').addEventListener('click', function () {
+            downloadExcel();
+        });
+
+
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // 1. Revisar si el usuario ya había elegido modo oscuro antes
+        if (localStorage.getItem('tema') === 'oscuro') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Modo Oscuro';
+        }
+
+        // 2. Cambiar tema al hacer clic
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = 'Modo Oscuro&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/></svg>';
+                localStorage.setItem('tema', 'oscuro');
+            } else {
+                themeToggle.innerHTML = `Modo Claro&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">
+                   <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+                   </svg>`;
+                localStorage.setItem('tema', 'claro');
+            }
+        });
+    </script>
+</body>
 </section>
+
 </html>
