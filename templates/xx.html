@@ -137,11 +137,12 @@
             background-color: #4caf50;
         }
 
-        .iamage {
-            width: 915px;
-            height: 300px;
+        .imagen {
+            max-width: 100%;
+            max-height: 300px;
+            width: auto;
+            height: auto;
         }
-
 
 
         :root {
@@ -201,7 +202,7 @@
     <div class="container">
         <button id="themeToggle" class="btn btn-secondary" type="button" type="image/svg+xml">Modo Claro</button>
         <br>
-         <br>
+        <br>
         <header class="header-title">
             <br>
             <h1>Calculadora de Subneteo</h1>
@@ -252,7 +253,9 @@
             <section class="actions-group">
                 <h3>Formatos de descarga</h3>
                 <button id="downloadJPG" class="btn">Descargar Jpg</button>
+                    &nbsp;
                 <button id="downloadPNG" class="btn">Descargar Png</button>
+                    &nbsp;&nbsp;&nbsp;
                 <button id="downloadExcel" class="btn">Descargar Excel</button>
             </section>
 
@@ -316,7 +319,7 @@
             </section>
         </main>
         <br>
-        <center><img src="static/imagen-01.jpg" alt="bits" class="iamage" /></center>
+        <center><img src="static/images/imagen-01.jpg" alt="bits" class="imagen" /></center>
         <br>
         <br>
         <button class="btn" onclick="location.href='/TablaRed'">Clasificación de redes</button>
