@@ -1,240 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLase-A</title>
+    <title>Tabla de Prefijos IPv4 y Máscaras de Red</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-    <link  class="ops" rel="icon" href="{{ url_for('static', filename='css/texto.svg') }}" type="image/svg+xml">
-    <meta name="google-site-verification" content="kMXwxSvg64aCK_ipXLvzuhhY-DDdLks7A-SV78FhnSU" />
+    <link rel="icon" href="{{ url_for('static', filename='css/texto.svg') }}" type="image/svg+xml">
+
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --header-bg: #1e293b;
+            --accent-bg: #334155;
+            --bg-body: #f8fafc;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .btn-home {
+            background-color: #4caf50;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .btn-home:hover {
+            background-color: #4caf50;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .class-title {
+            background-color: var(--accent-bg);
+            color: white;
+            padding: 8px 12px;
+            margin-top: 25px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            background-color: #4caf50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #f4f4f4;
+            background-color: #4caf50
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+
+
+        :root {
+            --primary-color: #2e7d32;
+            --primary-hover: #1b5e20;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --table-even: #f8f9fa;
+            --info-bg: #f1f8e9;
+            --footer-bg: #edf2f7;
+            --input-bg: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333333;
+            --table-even: #262626;
+            --info-bg: #1b2e1e;
+            --footer-bg: #252525;
+            --input-bg: #2c2c2c;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-even);
+        }
+
+        .info-section {
+            background-color: var(--info-bg);
+        }
+
+        .help-footer {
+            background-color: var(--footer-bg);
+        }
+    </style>
 </head>
-<section class="texas">
- <body>
-    <section class="uno">
-     <br>
-     &nbsp;&nbsp;<button class="house" onclick="location.href='/#'"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" fill="white" class="bi bi-house-fill" viewBox="0 0 16 16">
-            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
-            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
-          </svg></button>
-    </section>
-    <h1 class="yes">Tabla de red</h1>
-    &nbsp;&nbsp;<table>
-    &nbsp;&nbsp;<tr>
-            <td class="uva">Tamaño de prefigo</td>
-            <td colspan="2" class="pasas">Mascara Red</td>
-            <td colspan="3" class="freasa">Hosts utilizables por subred</td>
-        </tr>
-        <tr>
-            <td><center>/1</center></td>
-            <td colspan="2">128.0.0.0</td>
-            <td colspan="3"><center>2,147,483,646</center></td>
-        </tr>
-        <tr>
-            <td><center>/2</center></td>
-            <td colspan="2">192.0.0.0</td>
-            <td colspan="3"><center>1,073,741,822</center></td>
-        </tr>
-        <tr>
-            <td><center>/3</center></td>
-            <td colspan="2">224.0.0.0</td>
-            <td colspan="3"><center>536,870,910</center></td>
-        </tr>
-        <tr>
-            <td><center>/4</center></td>
-            <td colspan="2">240.0.0.0</td>
-            <td colspan="3"><center>268,435,456</center></td>
-        </tr>
-        <tr>
-            <td><center>/5</center></td>
-            <td colspan="2">248.0.0.0</td>
-            <td colspan="3"><center>134,217,728</center></td>
-        </tr>
-        <tr>
-            <td><center>/6</center></td>
-            <td colspan="2">252.0.0.0</td>
-            <td colspan="3"><center>67,108,862</center></td>
-        </tr>
-        <tr>
-            <td><center>/7</center></td>
-            <td colspan="2">254.0.0.0</td>
-            <td colspan="3"><center>33,554,432</center></td>
-        </tr>
-        <tr>
-            <td colspan="4" class="dell"><center>CLASE A</center></td>
-        </tr>
-    </table>
-    <br>
-    <h1 class="yes">Tabla</h1>
-    
-    <table>
-        <tr>
-            <td class="uva">Tamaño de prefigo</td>
-            <td colspan="2" class="pasas">Mascara Red</td>
-            <td colspan="3" class="freasa">Hosts utilizables por subred</td>
-        </tr>
-        <tr>
-            <td><center>/8</center></td>
-            <td colspan="2">255.0.0.0</td>
-            <td colspan="3"><center>16,777,214</center></td>
-        </tr>
-        <tr>
-            <td><center>/9</center></td>
-            <td colspan="2">255.128.0.0</td>
-            <td colspan="3"><center>8,388,606</center></td>
-        </tr>
-        <tr>
-            <td><center>/10</center></td>
-            <td colspan="2">255.192.0.0</td>
-            <td colspan="3"><center>4,194,302</center></td>
-        </tr>
-        <tr>
-            <td><center>/11</center></td>
-            <td colspan="2">255.224.0.0</td>
-            <td colspan="3"><center>2,097,150</center></td>
-        </tr>
-        <tr>
-            <td><center>/12</center></td>
-            <td colspan="2">255.240.0.0</td>
-            <td colspan="3"><center>1,048,574</center></td>
-        </tr>
-        <tr>
-            <td><center>/13</center></td>
-            <td colspan="2">255.248.0.0</td>
-            <td colspan="3"><center>524,278</center></td>
-        </tr>
-        <tr>
-            <td><center>/14</center></td>
-            <td colspan="2">255.252.0.0</td>
-            <td colspan="3"><center>262,142</center></td>
-        </tr>
-        <tr>
-            <td><center>/15</center></td>
-            <td colspan="2">255.254.0.0</td>
-            <td colspan="3"><center>131,070</center></td>
-        </tr>
-        <tr>
-            <td><center>/16</center></td>
-            <td colspan="2">255.255.0.0</td>
-            <td colspan="3"><center>65,534</center></td>
-        </tr>
-        <tr>
-            <td colspan="4" class="dell"><center>CLASE A</center></td>
-        </tr>
-    </table>
-    <br>
-    <h1 class="yes">Tabla de Clase-B</h1>
 
-    <table>
-        <tr>
-            <td class="uva">Tamaño de prefigo</td>
-            <td colspan="2" class="pasas">Mascara Red</td>
-            <td colspan="3" class="freasa">Hosts utilizables por subred</td>
-        </tr>
-        <tr>
-            <td><center>/17</center></td>
-            <td colspan="2">255.255.128.0</td>
-            <td colspan="3"><center>32,766</center></td>
-        </tr>
-        <tr>
-            <td><center>/18</center></td>
-            <td colspan="2">255.255.192.0</td>
-            <td colspan="3"><center>16,382</center></td>
-        </tr>
-        <tr>
-            <td><center>/19</center></td>
-            <td colspan="2">255.255.224.0</td>
-            <td colspan="3"><center>8,190</center></td>
-        </tr>
-        <tr>
-            <td><center>/20</center></td>
-            <td colspan="2">255.255.240.0</td>
-            <td colspan="3"><center>4,094</center></td>
-        </tr>
-        <tr>
-            <td><center>/21</center></td>
-            <td colspan="2">255.255.248.0</td>
-            <td colspan="3"><center>2,047</center></td>
-        </tr>
-        <tr>
-            <td><center>/22</center></td>
-            <td colspan="2">255.255.252.0</td>
-            <td colspan="3"><center>1,023</center></td>
-        </tr>
-        <tr>
-            <td><center>/23</center></td>
-            <td colspan="2">255.255.254.0</td>
-            <td colspan="3"><center>510</center></td>
-        </tr>
-        <tr>
-            <td colspan="4" class="dell"><center>CLASE B</center></td>
-        </tr>
-    </table>
-    <br>
-    <h1 class="yes">Tabla de Clase-C</h1>
+<body>
+    <div class="container">
+        <header class="nav-header">
+            <button class="btn-home" onclick="location.href='/'" title="Volver al inicio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
+                    <path
+                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                </svg>
+            </button>
+            <h1>Tabla de Direccionamiento y Prefijos IPv4</h1>
+        </header>
 
-    <table>
-        <tr>
-            <td class="uva">Tamaño de prefigo</td>
-            <td colspan="2" class="pasas">Mascara Red</td>
-            <td colspan="3" class="freasa">Hosts utilizables por subred</td>
-        </tr>
-        <tr>
-            <td><center>/24</center></td>
-            <td colspan="2">255.255.255.0</td>
-            <td colspan="3"><center>254</center></td>
-        </tr>
-        <tr>
-            <td><center>/25</center></td>
-            <td colspan="2">255.255.255.128</td>
-            <td colspan="3"><center>126</center></td>
-        </tr>
-        <tr>
-            <td><center>/26</center></td>
-            <td colspan="2">255.255.255.192</td>
-            <td colspan="3"><center>62</center></td>
-        </tr>
-        <tr>
-            <td><center>/27</center></td>
-            <td colspan="2">255.255.255.224</td>
-            <td colspan="3"><center>30</center></td>
-        </tr>
-        <tr>
-            <td><center>/28</center></td>
-            <td colspan="2">255.255.255.240</td>
-            <td colspan="3"><center>14</center></td>
-        </tr>
-        <tr>
-            <td><center>/29</center></td>
-            <td colspan="2">255.255.255.248</td>
-            <td colspan="3"><center>6</center></td>
-        </tr>
-        <tr>
-            <td><center>/30</center></td>
-            <td colspan="2">255.255.255.252</td>
-            <td colspan="3"><center>2</center></td>
-        </tr>
-        <tr>
-            <td><center>/31</center></td>
-            <td colspan="2">255.255.255.254</td>
-            <td colspan="3"><center>0</center></td>
-        </tr>
-        <tr>
-            <td><center>/32</center></td>
-            <td colspan="2">255.255.255.255</td>
-            <td><center>0</center></td>
-        </tr>
-    </table>
-    <br>
-    <section class="rayo">
-      <br>
-       <br>
-        <center><p>Derechos de ©Copiring</p></center>
-        <center><p>Esta pagina fue hecha en 2024 en MEXICO</p></center>
-        <center><a href="https://www.cisco.com/c/es_mx/index.html#:~:text=Cisco%20M%C3%A9xico.%20M%C3%A9xico%20cuenta%20con%20una%20gran">https://www.cisco.com/c/es_mx/index.html#:~:
-        text=Cisco%20M%C3%A9xico.%20M%C3%A9xico%20cuenta%20con%20una%20gran</a></center>
-       <br>
-      <br>
-    </section>
- </body>
-</section>
+        <main>
+            <!-- CIDR / Superredes (/1 a /7) -->
+            <div class="class-title">Prefijos CIDR / Superredes (/1 a /7)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prefijo</th>
+                        <th>Máscara de Red</th>
+                        <th>Hosts Utilizables por Subred</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/1</td>
+                        <td>128.0.0.0</td>
+                        <td>2,147,483,646</td>
+                    </tr>
+                    <tr>
+                        <td>/2</td>
+                        <td>192.0.0.0</td>
+                        <td>1,073,741,822</td>
+                    </tr>
+                    <tr>
+                        <td>/3</td>
+                        <td>224.0.0.0</td>
+                        <td>536,870,910</td>
+                    </tr>
+                    <tr>
+                        <td>/4</td>
+                        <td>240.0.0.0</td>
+                        <td>268,435,454</td>
+                    </tr>
+                    <tr>
+                        <td>/5</td>
+                        <td>248.0.0.0</td>
+                        <td>134,217,726</td>
+                    </tr>
+                    <tr>
+                        <td>/6</td>
+                        <td>252.0.0.0</td>
+                        <td>67,108,862</td>
+                    </tr>
+                    <tr>
+                        <td>/7</td>
+                        <td>254.0.0.0</td>
+                        <td>33,554,430</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- CLASE A (/8 a /16) -->
+            <div class="class-title">Prefijos Clase A (/8 a /16)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prefijo</th>
+                        <th>Máscara de Red</th>
+                        <th>Hosts Utilizables por Subred</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/8</td>
+                        <td>255.0.0.0</td>
+                        <td>16,777,214</td>
+                    </tr>
+                    <tr>
+                        <td>/9</td>
+                        <td>255.128.0.0</td>
+                        <td>8,388,606</td>
+                    </tr>
+                    <tr>
+                        <td>/10</td>
+                        <td>255.192.0.0</td>
+                        <td>4,194,302</td>
+                    </tr>
+                    <tr>
+                        <td>/11</td>
+                        <td>255.224.0.0</td>
+                        <td>2,097,150</td>
+                    </tr>
+                    <tr>
+                        <td>/12</td>
+                        <td>255.240.0.0</td>
+                        <td>1,048,574</td>
+                    </tr>
+                    <tr>
+                        <td>/13</td>
+                        <td>255.248.0.0</td>
+                        <td>524,286</td>
+                    </tr>
+                    <tr>
+                        <td>/14</td>
+                        <td>255.252.0.0</td>
+                        <td>262,142</td>
+                    </tr>
+                    <tr>
+                        <td>/15</td>
+                        <td>255.254.0.0</td>
+                        <td>131,070</td>
+                    </tr>
+                    <tr>
+                        <td>/16</td>
+                        <td>255.255.0.0</td>
+                        <td>65,534</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- CLASE B (/17 a /23) -->
+            <div class="class-title">Prefijos Clase B (/17 a /23)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prefijo</th>
+                        <th>Máscara de Red</th>
+                        <th>Hosts Utilizables por Subred</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/17</td>
+                        <td>255.255.128.0</td>
+                        <td>32,766</td>
+                    </tr>
+                    <tr>
+                        <td>/18</td>
+                        <td>255.255.192.0</td>
+                        <td>16,382</td>
+                    </tr>
+                    <tr>
+                        <td>/19</td>
+                        <td>255.255.224.0</td>
+                        <td>8,190</td>
+                    </tr>
+                    <tr>
+                        <td>/20</td>
+                        <td>255.255.240.0</td>
+                        <td>4,094</td>
+                    </tr>
+                    <tr>
+                        <td>/21</td>
+                        <td>255.255.248.0</td>
+                        <td>2,046</td>
+                    </tr>
+                    <tr>
+                        <td>/22</td>
+                        <td>255.255.252.0</td>
+                        <td>1,022</td>
+                    </tr>
+                    <tr>
+                        <td>/23</td>
+                        <td>255.255.254.0</td>
+                        <td>510</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- CLASE C y Específicos (/24 a /32) -->
+            <div class="class-title">Prefijos Clase C y Enlaces Punto a Punto (/24 a /32)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prefijo</th>
+                        <th>Máscara de Red</th>
+                        <th>Hosts Utilizables por Subred</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/24</td>
+                        <td>255.255.255.0</td>
+                        <td>254</td>
+                    </tr>
+                    <tr>
+                        <td>/25</td>
+                        <td>255.255.255.128</td>
+                        <td>126</td>
+                    </tr>
+                    <tr>
+                        <td>/26</td>
+                        <td>255.255.255.192</td>
+                        <td>62</td>
+                    </tr>
+                    <tr>
+                        <td>/27</td>
+                        <td>255.255.255.224</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>/28</td>
+                        <td>255.255.255.240</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>/29</td>
+                        <td>255.255.255.248</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>/30</td>
+                        <td>255.255.255.252</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>/31</td>
+                        <td>255.255.255.254</td>
+                        <td>2 (RFC 3021)</td>
+                    </tr>
+                    <tr>
+                        <td>/32</td>
+                        <td>255.255.255.255</td>
+                        <td>1 (Host único / Loopback)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Derechos Reservados | Delta-computing.</p>
+            <p class="este">Todos los derechos reservados</p>
+            <p>
+                Referencia:
+                <a href="https://www.cisco.com/c/es_mx/index.html" target="_blank" rel="noopener noreferrer">Cisco
+                    México</a>
+            </p>
+            <br>
+        </footer>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // 1. Revisar si el usuario ya había elegido modo oscuro antes
+        if (localStorage.getItem('tema') === 'oscuro') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Modo Claro';
+        }
+    </script>
+</body>
+
 </html>
